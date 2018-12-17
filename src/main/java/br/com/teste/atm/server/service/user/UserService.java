@@ -34,7 +34,9 @@ public class UserService {
 	public User save(final User user) throws UserAlreadExistException {
 
 		User userEntity = repository.findByUsername(user.getUsername());
-		if(isUserExists(userEntity)) throw new UserAlreadExistException("Username already exists");
+		if(isUserExists(userEntity)) {
+			throw new UserAlreadExistException("Username already exists");
+		}
 
 		repository.save(user);
 
@@ -57,7 +59,7 @@ public class UserService {
 	}
 
 	/**
-	 *
+	 * Delete User
 	 * @param userId
 	 * @throws UserNotFoundException
 	 */

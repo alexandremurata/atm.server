@@ -1,6 +1,7 @@
 package br.com.teste.atm.server.model.account;
 
 import br.com.teste.atm.server.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,13 +29,24 @@ public class Account {
 	@NotNull
 	private Double balance;
 
-	@OneToOne
+	@JsonIgnore
+	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
 	private User user;
 
 	/**
 	 * Constructor
 	 */
 	public Account(){}
+
+	/**
+	 * Constructor with parameters
+	 * @param id		id`s Account
+	 * @param balance	balance`s Account
+	 */
+	public Account(final Long id, final Double balance) {
+		this.id = id;
+		this.balance = balance;
+	}
 
 	/**
 	 * Constructor with parameters

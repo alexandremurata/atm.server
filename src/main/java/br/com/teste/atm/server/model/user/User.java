@@ -31,7 +31,7 @@ public class User {
 	@Transient
 	private String confirmPassword;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "account_id")
 	private Account account;
 
@@ -58,5 +58,19 @@ public class User {
 		this.password = password;
 		this.account = account;
 		this.roles = roles;
+	}
+
+	/**
+	 * Constructor with parameters
+	 * @param id		id`s User
+	 * @param username	username`s User
+	 * @param password	password`s User
+	 * @param account 	account`s User
+	 */
+	public User(final Long id, final String username, final String password, final Account account) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.account = account;
 	}
 }
