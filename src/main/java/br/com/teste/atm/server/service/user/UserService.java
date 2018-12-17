@@ -41,6 +41,26 @@ public class UserService {
 		return user;
 	}
 
+	/**
+	 * Edit User
+	 * @param user	User to be update
+	 * @return		User edited
+	 * @throws UserNotFoundException
+	 */
+	public User update(final User user) throws UserNotFoundException {
+		User userEntity = repository.findUserById(user.getId());
+
+		if(!isUserExists(userEntity)) throw new UserNotFoundException("User not found");
+		userEntity.setUsername(user.getUsername());
+
+		return repository.save(userEntity);
+	}
+
+	/**
+	 *
+	 * @param userId
+	 * @throws UserNotFoundException
+	 */
 	public void delete(final Long userId) throws UserNotFoundException {
 		User userEntity = repository.findUserById(userId);
 		if(!isUserExists(userEntity)) throw new UserNotFoundException("User not found");

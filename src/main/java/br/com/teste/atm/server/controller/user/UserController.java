@@ -13,7 +13,8 @@ import java.util.List;
 
 /**
  * <p>
- *     UserController class
+ *     This controller provides the API that is used to perform CRUD operations for
+ *     {@link User}
  * </p>
  * @author murata
  * @project atm.server
@@ -36,14 +37,30 @@ public class UserController {
 		} catch(UserAlreadExistException e) {
 			return new ResponseEntity(HttpStatus.CONFLICT);
 		}
-
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
 
 	/**
-	 *
-	 * @param id
-	 * @return
+	 * Edit user
+	 * @param user	User to be edited
+	 * @return		ResponseEntity
+	 */
+	@RequestMapping(path = "/user", method = RequestMethod.PUT)
+	public ResponseEntity<User> edit(@RequestBody final User user) {
+
+		User currentUser = null;
+		try{
+			service.update(user);
+		} catch(UserNotFoundException e) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity(currentUser, HttpStatus.OK);
+	}
+
+	/**
+	 * Delete user
+	 * @param id	id`s User to be deleted
+	 * @return		ResponseEntity
 	 */
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<User> delete(@PathVariable("id") final Long id) {
@@ -68,7 +85,6 @@ public class UserController {
 		return new ResponseEntity(users, HttpStatus.OK);
 	}
 
-	//TODO: edit
 	//TODO: findById
 	//TODO; findByUsername
 }
